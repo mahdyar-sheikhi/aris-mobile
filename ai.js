@@ -1,6 +1,6 @@
 'use strict';
 (function(root){
- function endpoint(value){const u=new URL(value.trim());if(u.protocol!=='https:'||!u.hostname.endsWith('.ts.net')||u.username||u.password||u.port||u.search||u.hash||u.pathname!=='/')throw Error('آدرس HTTPS خصوصی Tailscale با پسوند ts.net وارد کن؛ بدون مسیر اضافی.');return u.origin;}
+ function endpoint(value){let u;try{u=new URL(value.trim());}catch{throw Error('آدرس HTTPS خصوصی لپ‌تاپ را وارد کن.');}if(u.protocol!=='https:'||!u.hostname.endsWith('.ts.net')||u.username||u.password||u.port||u.search||u.hash||u.pathname!=='/')throw Error('آدرس HTTPS خصوصی Tailscale با پسوند ts.net وارد کن؛ بدون مسیر اضافی.');return u.origin;}
  const errors={401:'کلید اتصال نادرست است.',403:'این نشانی برنامه اجازه اتصال ندارد.',429:'مدل مشغول است؛ کمی بعد دوباره تلاش کن.',504:'زمان پاسخ مدل تمام شد؛ مدل سبک‌تر را امتحان کن.'};
  async function request(base,token,path,body){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),path==='/chat'?165000:15000);
